@@ -4,75 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 2 Year Anniversary</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #ffcccb;
+            font-family: Calibri, sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin: 20px auto;
+            width: 80%;
+        }
+        .question {
+            display: none;
+            margin: 20px 0;
+        }
+        .question.active {
+            display: block;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 10px 0;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .animation {
+            animation: correct-answer 1s;
+        }
+        @keyframes correct-answer {
+            0% { background-color: yellow; }
+            100% { background-color: inherit; }
+        }
+        #result {
+            display: none;
+            font-size: 1.5em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+    </style>
 </head>
 <body>
-    <header id="header">
-        <h1 id="title">Happy 2 Year Anniversary</h1>
-    </header>
-    <main id="quiz-section">
-        <div id="quiz-container">
-            <h2>Quiz</h2>
-            <div class="question">
-                <p>Where did we meet?</p>
-                <button onclick="checkAnswer(this, 'Charles University in Prague')">Charles University in Prague</button>
-                <button onclick="checkAnswer(this, 'At a coffee shop')">At a coffee shop</button>
-                <button onclick="checkAnswer(this, 'At a concert')">At a concert</button>
-                <button onclick="checkAnswer(this, 'On a beach')">On a beach</button>
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>When did I realise we were soulmates?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'when we got home to Madrid and went to pick up some Lebanese food 40 minutes away, life with you just felt like peace')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>How many countries have we been in together?</p>
-                <button onclick="checkAnswer(this, '5')">5</button>
-                <button onclick="checkAnswer(this, '7')">7</button>
-                <button onclick="checkAnswer(this, '9')">9</button>
-                <button onclick="checkAnswer(this, '11')">11</button>
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>What game did we first play together?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'Fortnite')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>What was the first meal we shared together?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'trick question, it’s those ice cream cones in Prague')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>Where did we first become girlfriend and boyfriend?</p>
-                <button onclick="checkAnswer(this, 'Romantic getaway')">Romantic getaway</button>
-                <button onclick="checkAnswer(this, 'At a dinner')">At a dinner</button>
-                <button onclick="checkAnswer(this, 'In a Swamp')">In a Swamp</button>
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>What was our first crackhead activity?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'trying to get into a casino in Prague')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>What was our last crackhead activity?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'almost dying at the edge of a cliff surrounded by sheep while bad bunny was playing')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>Who loves who more?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'ME')">
-                <p class="answer"></p>
-            </div>
-            <div class="question">
-                <p>Where do I feel the safest in the world?</p>
-                <input type="text" placeholder="Type your answer" onkeydown="if(event.key === 'Enter') checkTypeAnswer(this, 'your arms')">
-                <p class="answer"></p>
-            </div>
+    <div class="container" id="main-page">
+        <h1 style="font-family: 'Calibri'; font-weight: bold;">Happy 2 Year Anniversary</h1>
+        <button onclick="showQuiz()">Next</button>
+    </div>
+    
+    <div class="container" id="quiz-page" style="display:none;">
+        <div id="question1" class="question active">
+            <h2>Where did we meet?</h2>
+            <ul class="options">
+                <li onclick="checkAnswer(1, this, false)">Paris, France</li>
+                <li onclick="checkAnswer(1, this, false)">New York, USA</li>
+                <li onclick="checkAnswer(1, this, true)">Charles University in Prague</li>
+                <li onclick="checkAnswer(1, this, false)">Tokyo, Japan</li>
+            </ul>
         </div>
-    </main>
-    <script src="script.js"></script>
+        
+        <div id="question2" class="question">
+            <h2>When did I realise we were soulmates?</h2>
+            <input type="text" id="q2-answer">
+            <button onclick="checkTextAnswer(2, 'when we got home to Madrid and went to pick up some Lebanese food 40 minutes away, life with you just felt like peace')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question3" class="question">
+            <h2>How many countries have we been in together?</h2>
+            <ul class="options">
+                <li onclick="checkAnswer(3, this, false)">5</li>
+                <li onclick="checkAnswer(3, this, false)">7</li>
+                <li onclick="checkAnswer(3, this, true)">9</li>
+                <li onclick="checkAnswer(3, this, false)">10</li>
+            </ul>
+        </div>
+        
+        <div id="question4" class="question">
+            <h2>What game did we first play together?</h2>
+            <input type="text" id="q4-answer">
+            <button onclick="checkTextAnswer(4, 'fortnite')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question5" class="question">
+            <h2>What was the first meal we shared together?</h2>
+            <input type="text" id="q5-answer">
+            <button onclick="checkTextAnswer(5, 'trick question, it’s those ice cream cones in prague')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question6" class="question">
+            <h2>Where did we first become girlfriend and boyfriend?</h2>
+            <ul class="options">
+                <li onclick="checkAnswer(6, this, false)">Romantic getaway</li>
+                <li onclick="checkAnswer(6, this, false)">At a dinner</li>
+                <li onclick="checkAnswer(6, this, true)">In a swamp</li>
+            </ul>
+        </div>
+        
+        <div id="question7" class="question">
+            <h2>What was our first crackhead activity?</h2>
+            <input type="text" id="q7-answer">
+            <button onclick="checkTextAnswer(7, 'trying to get into a casino in prague')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question8" class="question">
+            <h2>What was our last crackhead activity?</h2>
+            <input type="text" id="q8-answer">
+            <button onclick="checkTextAnswer(8, 'almost dying at the edge of a cliff surrounded by sheep while bad bunny was playing')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question9" class="question">
+            <h2>What is our song?</h2>
+            <input type="text" id="q9-answer">
+            <button onclick="checkTextAnswer(9, 'for my hand by bourna hoy')">Submit</button>
+            <p class="correct"></p>
+        </div>
+        
+        <div id="question10" class="question">
+            <h2>Where do I feel the safest in the world?</h2>
+            <input type="text" id="q10-answer">
+            <button onclick="checkTextAnswer(10, 'your arms')">Submit</button>
+            <p class="correct"></p>
+        </div>
+
+        <div id="result" class="container">
+            <h2>Your Score: <span id="score"></span>/100</h2>
+        </div>
+    </div>
+    
+    <script>
+        let score = 0;
+        let totalQuestions = 10;
+        let currentQuestion = 1;
+
+        function showQuiz() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('quiz-page').style.display = 'block';
+        }
+
+        function checkAnswer(question, element, isCorrect) {
+            if (isCorrect) {
+                score += 10;
+                element.classList.add('correct');
+                element.classList.add('animation');
+            } else {
+                element.classList.add('incorrect');
+            }
+            setTimeout(() => {
+                nextQuestion(question);
+            }, 1000);
+        }
+
+        function checkTextAnswer(question, correctAnswer) {
+            let input = document.getElementById(`q${question}-answer`).value.toLowerCase().trim();
+            let correctElement = document.querySelector(`#question${question} .correct`);
+            if (input === correctAnswer.toLowerCase()) {
+                score += 10;
+                correctElement.innerText = "Correct!";
+                correctElement.classList.add('correct');
+                correctElement.classList.add('animation');
+            } else {
+                correctElement.innerText = `Incorrect! The correct answer is: ${correctAnswer}`;
+                correctElement.classList.add('incorrect');
+            }
+            setTimeout(() => {
+                nextQuestion(question);
+            }, 2000);
+        }
+
+        function nextQuestion(question) {
+            document.getElementById(`question${question}`).classList.remove('active');
+            currentQuestion++;
+            if (currentQuestion <= totalQuestions) {
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-page').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('score').innerText = score;
+        }
+    </script>
 </body>
 </html>
